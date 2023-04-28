@@ -2,7 +2,7 @@ import re
 import tweepy
 import openai
 import time
-from config import TWITTER_API_KEY, TWITTER_API_SECRET, TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_SECRET, OPENAI_API_KEY, LIST_ID, TARGET_ACCOUNT
+from config import TWITTER_API_KEY, TWITTER_API_SECRET, TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_SECRET, OPENAI_API_KEY, LIST_ID, TARGET_ACCOUNT, REPHRASE_OPEN_AI_ENGINE, TRANSLATE_OPEN_AI_ENGINE
 
 # Set up Tweepy and OpenAI API
 auth = tweepy.OAuthHandler(TWITTER_API_KEY, TWITTER_API_SECRET)
@@ -17,7 +17,7 @@ openai.api_key = OPENAI_API_KEY
 def rephrase_tweet(tweet):
     prompt = f"Rephrase the following tweet:\n\n{tweet}\n\nRephrased:"
     response = openai.Completion.create(
-        engine="text-davinci-002",
+        engine=REPHRASE_OPEN_AI_ENGINE,
         prompt=prompt,
         max_tokens=100,
         n=1,
@@ -32,7 +32,7 @@ def rephrase_tweet(tweet):
 def translate_tweet_to_arabic(tweet):
     prompt = f"Translate the following English tweet into Arabic without translating URLs and emojis:\n\n{tweet}\n\nTranslation:"
     response = openai.Completion.create(
-        engine="text-davinci-002",
+        engine=TRANSLATE_OPEN_AI_ENGINE,
         prompt=prompt,
         max_tokens=100,
         n=1,
